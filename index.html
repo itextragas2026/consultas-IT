@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soporte IT - Extragas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #ebebeb; font-family: 'Proxima Nova', -apple-system, sans-serif; }
+        .meli-shadow { box-shadow: 0 1px 2px 0 rgba(0,0,0,.1); }
+        .input-focus:focus { border-color: #3483fa; box-shadow: 0 0 0 1px #3483fa; }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <header class="bg-[#fff159] p-4 mb-8 shadow-sm">
+        <div class="max-w-4xl mx-auto flex items-center justify-between">
+            <h1 class="text-[#333] font-bold text-lg italic">EXTRAGAS <span class="not-italic font-normal">| Soporte IT</span></h1>
+            <svg class="w-8 h-8 text-[#333]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </div>
+    </header>
+
+    <main class="flex-grow flex items-start justify-center px-4">
+        <div id="app-container" class="bg-white p-6 md:p-10 rounded-md meli-shadow w-full max-w-[500px]">
+            
+            <h2 class="text-2xl font-semibold text-[#333] mb-6">Completá los datos del problema</h2>
+            
+            <form id="ticketForm" class="space-y-6">
+                <div>
+                    <label class="block text-sm font-normal text-[#333] mb-2">Tu nombre y apellido</label>
+                    <input type="text" name="nombre" placeholder="Ej: Joaquin Dalbo" class="w-full p-3 border border-[#ddd] rounded-md outline-none input-focus transition" required>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-normal text-[#333] mb-2">¿En qué sucursal estás?</label>
+                    <select name="sucursal" class="w-full p-3 border border-[#ddd] rounded-md outline-none bg-white input-focus transition appearance-none cursor-pointer" required>
+                        <option value="">Seleccionar...</option>
+                        <option value="Cañuelas">Cañuelas</option>
+                        <option value="Mendoza">Mendoza</option>
+                        <option value="Luján">Luján</option>
+                        <option value="Castelli">Castelli</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-normal text-[#333] mb-2">¿Qué tipo de ayuda necesitás?</label>
+                    <select name="categoria" class="w-full p-3 border border-[#ddd] rounded-md outline-none bg-white input-focus transition appearance-none cursor-pointer" required>
+                        <option value="">Elegí una opción</option>
+                        <option value="Hardware">Falla física (PC, Monitor, Impresora)</option>
+                        <option value="Software">Problema de Software (SAP, Windows, Office)</option>
+                        <option value="Redes">Internet / VPN / Conectividad</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-normal text-[#333] mb-2">Contanos un poco más</label>
+                    <textarea name="descripcion" placeholder="Ej: Mi computadora no enciende..." class="w-full p-3 border border-[#ddd] rounded-md outline-none input-focus transition" rows="3" required></textarea>
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit" id="submitBtn" class="w-full bg-[#3483fa] hover:bg-[#2968c8] text-white font-semibold py-3.5 rounded-md transition duration-200">
+                        Enviar solicitud
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="p-8 text-center text-xs text-[#999]">
+        Copyright © 2026 Extragas S.A. - IT Support
+    </footer>
+
+    <script>
+        const form = document.getElementById('ticketForm');
+        const btn = document.getElementById('submitBtn');
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyMBrpYfSt8sLb5olaStKaxN1gnvmH2ZG0uFVhioHq7Vu-Rz4jiRwtbwaOY4BuHalvd/exec'; // <--- PEGA TU LINK ACÁ
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            btn.innerText = 'Procesando...';
+            btn.style.opacity = '0.7';
+            btn.disabled = true;
+
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('app-container').innerHTML = `
+                    <div class="text-center py-6">
+                        <div class="w-16 h-16 bg-[#00a650] rounded-full flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        </div>
+                        <h2 class="text-2xl font-semibold text-[#333]">¡Ya generamos tu ticket!</h2>
+                        <p class="text-[#666] mt-4 text-lg">Tu número es el <span class="font-bold text-[#333]">${data.ticket}</span></p>
+                        <p class="text-[#999] text-sm mt-2">Revisaremos tu pedido en la sucursal indicada.</p>
+                        <div class="mt-8">
+                            <button onclick="window.location.reload()" class="text-[#3483fa] font-semibold hover:text-[#2968c8] transition">Cargar otro reporte</button>
+                        </div>
+                    </div>
+                `;
+            })
+            .catch(error => {
+                alert('Hubo un problema. Por favor contactanos por WhatsApp.');
+                btn.innerText = 'Enviar solicitud';
+                btn.disabled = false;
+            });
+        });
+    </script>
+</body>
+</html>
