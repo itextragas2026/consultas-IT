@@ -3,103 +3,277 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soporte IT - Extragas</title>
+    <title>Soporte IT | Extragas</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #ebebeb; font-family: 'Proxima Nova', -apple-system, sans-serif; }
-        .meli-shadow { box-shadow: 0 1px 2px 0 rgba(0,0,0,.1); }
-        .input-focus:focus { border-color: #3483fa; box-shadow: 0 0 0 1px #3483fa; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+        
+        body { 
+            background: radial-gradient(circle at top right, #fdfbfb 0%, #ebedee 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #1d1d1f;
+        }
+
+        .apple-card {
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.45);
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.04);
+        }
+
+        .apple-input {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid #d2d2d7;
+            border-radius: 12px;
+            padding: 12px 16px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            appearance: none;
+        }
+
+        .apple-input:focus {
+            border-color: #0071e3;
+            box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.15);
+            outline: none;
+            background: #ffffff;
+        }
+
+        .apple-button {
+            background: #0071e3;
+            color: white;
+            font-weight: 500;
+            border-radius: 12px;
+            padding: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .apple-button:hover {
+            background: #0077ed;
+            transform: scale(1.01);
+        }
+
+        .apple-button:disabled {
+            background: #999;
+            transform: none;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #drop-area.highlight {
+            border-color: #0071e3;
+            background: rgba(0, 113, 227, 0.05);
+        }
     </style>
 </head>
-<body class="flex flex-col min-h-screen">
+<body class="min-h-screen flex flex-col items-center justify-center p-4 md:p-8">
 
-    <header class="bg-[#fff159] p-4 mb-8 shadow-sm">
-        <div class="max-w-4xl mx-auto flex items-center justify-between">
-            <h1 class="text-[#333] font-bold text-lg italic">EXTRAGAS <span class="not-italic font-normal">| Soporte IT</span></h1>
-            <svg class="w-8 h-8 text-[#333]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-        </div>
+    <header class="mb-8 text-center fade-in">
+        <h1 class="text-3xl md:text-4xl font-semibold tracking-tight">Soporte IT</h1>
+        <p class="text-[#86868b] text-lg mt-1">Extragas</p>
     </header>
 
-    <main class="flex-grow flex items-start justify-center px-4">
-        <div id="app-container" class="bg-white p-6 md:p-10 rounded-md meli-shadow w-full max-w-[500px]">
+    <main class="w-full max-w-[550px] fade-in" style="animation-delay: 0.1s;">
+        <div id="app-container" class="apple-card p-6 md:p-10">
+            <h2 class="text-xl font-medium mb-6 text-center">Reportar un inconveniente</h2>
             
-            <h2 class="text-2xl font-semibold text-[#333] mb-6">Completá los datos del problema</h2>
-            
-            <form id="ticketForm" class="space-y-6">
+            <form id="ticketForm" class="space-y-5">
                 <div>
-                    <label class="block text-sm font-normal text-[#333] mb-2">Tu nombre y apellido</label>
-                    <input type="text" name="nombre" placeholder="Ej: Joaquin Dalbo" class="w-full p-3 border border-[#ddd] rounded-md outline-none input-focus transition" required>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-[#86868b] mb-2 ml-1">Nombre y Apellido</label>
+                    <input type="text" name="nombre" placeholder="Ej: Joaquin Dalbo" class="w-full apple-input text-[15px]" required>
                 </div>
 
                 <div>
-                    <label class="block text-sm font-normal text-[#333] mb-2">¿En qué sucursal estás?</label>
-                    <select name="sucursal" class="w-full p-3 border border-[#ddd] rounded-md outline-none bg-white input-focus transition appearance-none cursor-pointer" required>
-                        <option value="">Seleccionar...</option>
-                        <option value="Cañuelas">Cañuelas</option>
-                        <option value="Mendoza">Mendoza</option>
-                        <option value="Luján">Luján</option>
-                        <option value="Castelli">Castelli</option>
-                    </select>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-[#86868b] mb-2 ml-1">Teléfono o Correo</label>
+                    <input type="text" name="contacto" placeholder="Ej: 11 1234-5678 / usuario@extragas.com.ar" class="w-full apple-input text-[15px]" required>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-[#86868b] mb-2 ml-1">Sucursal</label>
+                        <div class="relative">
+                            <select name="sucursal" class="w-full apple-input text-[15px] pr-10" required>
+                                <option value="">Seleccionar...</option>
+                                <option value="9 de Julio">9 de Julio</option>
+                                <option value="Administración Central">Administración Central</option>
+                                <option value="Bahia Blanca">Bahia Blanca</option>
+                                <option value="Balcarce">Balcarce</option>
+                                <option value="Baradero">Baradero</option>
+                                <option value="Bolivar">Bolivar</option>
+                                <option value="Campana">Campana</option>
+                                <option value="Candelaria">Candelaria</option>
+                                <option value="Cañuelas">Cañuelas</option>
+                                <option value="Carlos Casares">Carlos Casares</option>
+                                <option value="Castelli">Castelli</option>
+                                <option value="Chascomús">Chascomús</option>
+                                <option value="Cinco Saltos">Cinco Saltos</option>
+                                <option value="Concepción">Concepción</option>
+                                <option value="Concordia">Concordia</option>
+                                <option value="Coronel Suarez">Coronel Suarez</option>
+                                <option value="Corrientes">Corrientes</option>
+                                <option value="Cosquin">Cosquin</option>
+                                <option value="Crespo">Crespo</option>
+                                <option value="El Quebrachal">El Quebrachal</option>
+                                <option value="Escobar">Escobar</option>
+                                <option value="Florencio Varela">Florencio Varela</option>
+                                <option value="Gonzalez Catan">Gonzalez Catan</option>
+                                <option value="Grand Bourg">Grand Bourg</option>
+                                <option value="La Rioja">La Rioja</option>
+                                <option value="Lomas de Zamora">Lomas de Zamora</option>
+                                <option value="Luján">Luján</option>
+                                <option value="Lujan de Cuyo">Lujan de Cuyo</option>
+                                <option value="Makallé">Makallé</option>
+                                <option value="Mar del Plata">Mar del Plata</option>
+                                <option value="Mariano Acosta">Mariano Acosta</option>
+                                <option value="Matanza">Matanza</option>
+                                <option value="Mendoza">Mendoza</option>
+                                <option value="Mercedes">Mercedes</option>
+                                <option value="Monte Grande">Monte Grande</option>
+                                <option value="Montecristo">Montecristo</option>
+                                <option value="Moreno">Moreno</option>
+                                <option value="Necochea">Necochea</option>
+                                <option value="Olavarría">Olavarría</option>
+                                <option value="Paraná">Paraná</option>
+                                <option value="Parque Leloir">Parque Leloir</option>
+                                <option value="Paso de los Libres">Paso de los Libres</option>
+                                <option value="Pergamino">Pergamino</option>
+                                <option value="Pinamar">Pinamar</option>
+                                <option value="Pontevedra">Pontevedra</option>
+                                <option value="Posadas">Posadas</option>
+                                <option value="Posadas II">Posadas II</option>
+                                <option value="Quilmes">Quilmes</option>
+                                <option value="Rafaela">Rafaela</option>
+                                <option value="Rio IV">Rio IV</option>
+                                <option value="Rodriguez">Rodriguez</option>
+                                <option value="Rosario">Rosario</option>
+                                <option value="Salta">Salta</option>
+                                <option value="San Francisco">San Francisco</option>
+                                <option value="San Justo">San Justo</option>
+                                <option value="San Martín">San Martín</option>
+                                <option value="San Vicente">San Vicente</option>
+                                <option value="Santa Rosa">Santa Rosa</option>
+                                <option value="Santa Teresita">Santa Teresita</option>
+                                <option value="Santiago del Estero">Santiago del Estero</option>
+                                <option value="Santo Tome">Santo Tome</option>
+                                <option value="Tostado">Tostado</option>
+                                <option value="Trenque Lauquen">Trenque Lauquen</option>
+                                <option value="Tres Arroyos">Tres Arroyos</option>
+                                <option value="Tucuman">Tucuman</option>
+                                <option value="Villa Boedo">Villa Boedo</option>
+                                <option value="Villa Elisa">Villa Elisa</option>
+                                <option value="Villegas">Villegas</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-[#86868b] mb-2 ml-1">Categoría</label>
+                        <select name="categoria" class="w-full apple-input text-[15px]" required>
+                            <option value="">¿Qué falla?</option>
+                            <option value="Hardware">Hardware (PC/Impresora)</option>
+                            <option value="Software">Software (SAP/Windows)</option>
+                            <option value="Redes">Redes / VPN</option>
+                            <option value="Compras">Insumos / Compras</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div>
-                    <label class="block text-sm font-normal text-[#333] mb-2">¿Qué tipo de ayuda necesitás?</label>
-                    <select name="categoria" class="w-full p-3 border border-[#ddd] rounded-md outline-none bg-white input-focus transition appearance-none cursor-pointer" required>
-                        <option value="">Elegí una opción</option>
-                        <option value="Hardware">Falla física (PC, Monitor, Impresora)</option>
-                        <option value="Software">Problema de Software (SAP, Windows, Office)</option>
-                        <option value="Redes">Internet / VPN / Conectividad</option>
-                    </select>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-[#86868b] mb-2 ml-1">Descripción del problema</label>
+                    <textarea name="descripcion" placeholder="Contanos qué está pasando..." class="w-full apple-input h-28 resize-none text-[15px]" required></textarea>
                 </div>
 
                 <div>
-                    <label class="block text-sm font-normal text-[#333] mb-2">Contanos un poco más</label>
-                    <textarea name="descripcion" placeholder="Ej: Mi computadora no enciende..." class="w-full p-3 border border-[#ddd] rounded-md outline-none input-focus transition" rows="3" required></textarea>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-[#86868b] mb-2 ml-1">Evidencia (Opcional)</label>
+                    <div id="drop-area" class="border-2 border-dashed border-[#d2d2d7] rounded-xl p-6 text-center transition-all cursor-pointer bg-[#f5f5f7]/50">
+                        <input type="file" id="fileElem" accept="image/*" class="hidden">
+                        <div id="file-label">
+                            <svg class="w-8 h-8 text-[#0071e3] mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <p class="text-sm text-[#1d1d1f]">Subir captura de pantalla</p>
+                            <p class="text-[11px] text-[#86868b] mt-1">Arrastrá o hacé clic</p>
+                        </div>
+                        <img id="preview" class="hidden mt-2 mx-auto max-h-32 rounded-lg shadow-sm border border-white">
+                    </div>
                 </div>
 
-                <div class="pt-4">
-                    <button type="submit" id="submitBtn" class="w-full bg-[#3483fa] hover:bg-[#2968c8] text-white font-semibold py-3.5 rounded-md transition duration-200">
-                        Enviar solicitud
-                    </button>
-                </div>
+                <button type="submit" id="submitBtn" class="w-full apple-button mt-4 shadow-lg shadow-blue-500/20">
+                    Enviar solicitud
+                </button>
             </form>
         </div>
     </main>
 
-    <footer class="p-8 text-center text-xs text-[#999]">
-        Copyright © 2026 Extragas S.A. - IT Support
+    <footer class="mt-8 text-[#86868b] text-[11px] font-light">
+        © 2026 Extragas • Infraestructura y Logística IT
     </footer>
 
     <script>
         const form = document.getElementById('ticketForm');
         const btn = document.getElementById('submitBtn');
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbyMBrpYfSt8sLb5olaStKaxN1gnvmH2ZG0uFVhioHq7Vu-Rz4jiRwtbwaOY4BuHalvd/exec'; // <--- PEGA TU LINK ACÁ
+        const dropArea = document.getElementById('drop-area');
+        const fileElem = document.getElementById('fileElem');
+        const preview = document.getElementById('preview');
+        const fileLabel = document.getElementById('file-label');
+        
+        let base64File = "";
+        
+        // REEMPLAZAR CON TU URL DE APPS SCRIPT
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyMBrpYfSt8sLb5olaStKaxN1gnvmH2ZG0uFVhioHq7Vu-Rz4jiRwtbwaOY4BuHalvd/exec'; 
+
+        // Archivos
+        dropArea.onclick = () => fileElem.click();
+        fileElem.addEventListener('change', function() { handleFiles(this.files); });
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(e => {
+            dropArea.addEventListener(e, ev => { ev.preventDefault(); ev.stopPropagation(); });
+        });
+        ['dragenter', 'dragover'].forEach(e => dropArea.addEventListener(e, () => dropArea.classList.add('highlight')));
+        ['dragleave', 'drop'].forEach(e => dropArea.addEventListener(e, () => dropArea.classList.remove('highlight')));
+        dropArea.addEventListener('drop', e => { handleFiles(e.dataTransfer.files); });
+
+        function handleFiles(files) {
+            const file = files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => {
+                    base64File = reader.result;
+                    preview.src = reader.result;
+                    preview.classList.remove('hidden');
+                    fileLabel.classList.add('hidden');
+                };
+            }
+        }
 
         form.addEventListener('submit', e => {
             e.preventDefault();
-            btn.innerText = 'Procesando...';
-            btn.style.opacity = '0.7';
+            btn.innerText = 'Enviando...';
             btn.disabled = true;
 
-            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-            .then(response => response.json())
+            const formData = new FormData(form);
+            const dataObj = Object.fromEntries(formData.entries());
+            dataObj.archivo = base64File;
+
+            fetch(scriptURL, { method: 'POST', body: new URLSearchParams(dataObj) })
+            .then(res => res.json())
             .then(data => {
                 document.getElementById('app-container').innerHTML = `
-                    <div class="text-center py-6">
-                        <div class="w-16 h-16 bg-[#00a650] rounded-full flex items-center justify-center mx-auto mb-6">
+                    <div class="text-center py-12 fade-in">
+                        <div class="w-20 h-20 bg-[#34c759] rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl shadow-green-100">
                             <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                         </div>
-                        <h2 class="text-2xl font-semibold text-[#333]">¡Ya generamos tu ticket!</h2>
-                        <p class="text-[#666] mt-4 text-lg">Tu número es el <span class="font-bold text-[#333]">${data.ticket}</span></p>
-                        <p class="text-[#999] text-sm mt-2">Revisaremos tu pedido en la sucursal indicada.</p>
-                        <div class="mt-8">
-                            <button onclick="window.location.reload()" class="text-[#3483fa] font-semibold hover:text-[#2968c8] transition">Cargar otro reporte</button>
-                        </div>
-                    </div>
-                `;
-            })
-            .catch(error => {
-                alert('Hubo un problema. Por favor contactanos por WhatsApp.');
+                        <h2 class="text-2xl font-semibold">Ticket enviado</h2>
+                        <p class="text-[#86868b] mt-4 text-lg">Número de gestión: <span class="text-black font-semibold">#${data.ticket}</span></p>
+                        <p class="text-sm text-[#86868b] mt-2">Revisaremos tu reporte a la brevedad.</p>
+                        <button onclick="window.location.reload()" class="mt-10 text-[#0071e3] font-medium hover:underline text-sm">Cargar otro reporte</button>
+                    </div>`;
+            }).catch(() => {
+                alert('Error al enviar. Verificá tu conexión.');
                 btn.innerText = 'Enviar solicitud';
                 btn.disabled = false;
             });
