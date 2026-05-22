@@ -85,14 +85,36 @@
             <h2 class="text-xl font-medium mb-6 text-center">Reportar un inconveniente</h2>
             
             <form id="ticketForm" class="space-y-5">
+                <!-- Selector Incidente o Solicitud (Izquierda o Derecha) -->
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-[#86868b] mb-2 ml-1">Tipo de Requerimiento</label>
+                    <div class="grid grid-cols-2 gap-2 bg-gray-100 p-1 rounded-xl">
+                        <button type="button" id="btn-incidente" onclick="seleccionarTipo('Incident')" class="py-2.5 text-sm font-medium rounded-lg bg-white text-gray-900 shadow-sm transition-all focus:outline-none">
+                            Incidente
+                        </button>
+                        <button type="button" id="btn-solicitud" onclick="seleccionarTipo('Request')" class="py-2.5 text-sm font-medium rounded-lg text-gray-500 hover:text-gray-900 transition-all focus:outline-none">
+                            Solicitud
+                        </button>
+                    </div>
+                    <!-- Entrada oculta que procesa el backend -->
+                    <input type="hidden" name="tipo_ticket" id="tipo_ticket" value="Incident">
+                </div>
+
                 <div>
                     <label class="block text-xs font-semibold uppercase tracking-wider text-[#86868b] mb-2 ml-1">Nombre y Apellido</label>
                     <input type="text" name="nombre" placeholder="Ej: Joaquin Dalbo" class="w-full apple-input text-[15px]" required>
                 </div>
 
-                <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-[#86868b] mb-2 ml-1">Teléfono o Correo</label>
-                    <input type="text" name="contacto" placeholder="Ej: 11 1234-5678 / usuario@extragas.com.ar" class="w-full apple-input text-[15px]" required>
+                <!-- Bloque de Contacto Rediseñado -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-[#86868b] mb-2 ml-1">Correo Electrónico</label>
+                        <input type="email" name="contacto" placeholder="usuario@extragas.com.ar" class="w-full apple-input text-[15px]" required>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-[#86868b] mb-2 ml-1">Celular (Opcional)</label>
+                        <input type="text" name="celular" placeholder="Ej: 11 1234-5678" class="w-full apple-input text-[15px]">
+                    </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -223,8 +245,23 @@
         
         let base64File = "";
         
-        // REEMPLAZAR CON TU URL DE APPS SCRIPT
+        // REEMPLAZAR CON TU URL DE APPS SCRIPT SI LLEGA A CAMBIAR
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwuZyqFq5pKPGlw-YTac508f9hRd_DueQOKsfDg8Q4b1FXS2SBkoj7UFvlCkVg1K7jR/exec'; 
+
+        // Conmutador visual para los botones Incidente / Solicitud
+        function seleccionarTipo(tipo) {
+            document.getElementById('tipo_ticket').value = tipo;
+            const btnIncidente = document.getElementById('btn-incidente');
+            const btnSolicitud = document.getElementById('btn-solicitud');
+            
+            if (tipo === 'Incident') {
+                btnIncidente.className = "py-2.5 text-sm font-medium rounded-lg bg-white text-gray-900 shadow-sm transition-all focus:outline-none";
+                btnSolicitud.className = "py-2.5 text-sm font-medium rounded-lg text-gray-500 hover:text-gray-900 transition-all focus:outline-none";
+            } else {
+                btnSolicitud.className = "py-2.5 text-sm font-medium rounded-lg bg-white text-gray-900 shadow-sm transition-all focus:outline-none";
+                btnIncidente.className = "py-2.5 text-sm font-medium rounded-lg text-gray-500 hover:text-gray-900 transition-all focus:outline-none";
+            }
+        }
 
         // Archivos
         dropArea.onclick = () => fileElem.click();
